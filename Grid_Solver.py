@@ -63,7 +63,7 @@ class Grid:
                 for i in range(len(possible_coord)):
                     next_x = current_pos[0] + possible_coord[i][0]
                     next_y = current_pos[1] + possible_coord[i][1]
-                    if valid_point((next_x, next_y), self.h, self.w) and visited_grid[next_x][next_y] == False and self.grid[next_x][next_y] == 1:
+                    if self.valid_point((next_x, next_y), self.h, self.w) and visited_grid[next_x][next_y] == False and self.grid[next_x][next_y] == 1:
                         visited_grid[next_x][next_y] = True
                         self.path.put((next_x, next_y))
                         if current_pos not in self.follow.queue:
@@ -87,14 +87,13 @@ class Grid:
                     counter += 1
         return(success, final_path)
 
-
-def valid_point(coord, height, width):
-    x = coord[0]
-    y = coord[1]
-    if x >= 0 and y >= 0 and x < height and y < width:
-        return True
-    else:
-        return False
+    def valid_point(self, coord, height, width):
+        x = coord[0]
+        y = coord[1]
+        if x >= 0 and y >= 0 and x < height and y < width:
+            return True
+        else:
+            return False
 
 
 if __name__ == "__main__":
