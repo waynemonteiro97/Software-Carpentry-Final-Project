@@ -4,6 +4,7 @@ Prabhjot Kaur
 '''
 import queue
 import sys
+import copy
 
 WALL = 0
 PATH = 1
@@ -35,6 +36,7 @@ class Grid:
         '''
         possible_coord = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         visited_grid = [[ False for j in range(self.w)] for i in range(self.h)]
+        end_pt = copy.deepcopy(self.end)
         # if the start and the end points are not a valid path
         if self.grid[self.start[0]][self.start[1]] != 1:
             for end in self.end:
@@ -43,6 +45,7 @@ class Grid:
         # Start point is now visited
         visited_grid[self.start[0]][self.start[1]] = True
         self.path.put(self.start)
+        success = False
         # Looping through the VALID PATH
         while len(list(self.path.queue)) != 0:
             # accessing the first element of queue
@@ -52,7 +55,8 @@ class Grid:
                     self.follow.put(current_pos)
                 self.end.pop(self.end.index(current_pos))
                 if len(self.end) == 0:
-                    return [True, list(self.follow.queue)]
+                    success = True
+                    break
                 # return [True, list(self.follow.queue)]
             else:
                 self.path.get()
@@ -64,6 +68,24 @@ class Grid:
                         self.path.put((next_x, next_y))
                         if current_pos not in self.follow.queue:
                             self.follow.put(current_pos)
+        # total_path = len(list(self.follow.queue))
+        final_path = [list(self.follow.queue)[-1]]
+        counter = 0
+        for i, ele in enumerate(reversed(list(self.follow.queue))):
+            x = ele[0]
+            y = ele[1]
+            n = self.follow.queue.index(ele)
+            x2 = self.follow.queue[n - 1][0]
+            y2 = self.follow.queue[n - 1][1]
+            last_pos = final_path[counter]
+            if (x == last_pos[0] and (y == last_pos[1] + 1 or y == last_pos[1] - 1)) or (y == last_pos[1] and (x == last_pos[0] + 1 or x == last_pos[0] - 1)):
+                if (x2 == last_pos[0] and (y2 == last_pos[1] + 1 or y2 == last_pos[1] - 1)) or (y2 == last_pos[1] and (x2 == last_pos[0] + 1 or x2 == last_pos[0] - 1)) and (x2, y2) in end_pt:
+                    final_path.append((x2, y2))
+                    counter += 1
+                else:
+                    final_path.append(ele)
+                    counter += 1
+        return(success, final_path)
 
 
 def valid_point(coord, height, width):
@@ -76,14 +98,16 @@ def valid_point(coord, height, width):
 
 
 if __name__ == "__main__":
-    maze = [[1, 1, 0 ,1], [1, 1, 1, 0], [0, 1, 1, 1], [0, 1, 1, 1]]
-    start_pt = (0,0)
-    end_pt = [(3,2), (3,3), (1,1)]
+    maze = [[1, 0, 0, 0, 0, 0, 1], [1, 1, 1, 1, 0, 0, 1], [0, 0, 1, 1, 1, 0, 1]
+             , [0, 0, 1, 1, 0, 0, 1], [1, 0, 0, 1, 0, 0, 1], [0, 1, 1, 1, 0, 1, 1]
+             , [0, 0, 1, 1, 1, 0, 1], [1, 0, 0, 0, 1, 1, 1]]
+    start_pt = (0, 0)
+    end_pt = [(1, 3), (3, 3), (7, 4), (0, 6)]
     grid = Grid(maze, start_pt, end_pt)
     result, path_followed = grid.shortest_path()
     if result:
         print("Congo")
         print("Path followed : ")
-        print(path_followed)
+        print(list(reversed(path_followed)))
     else:
         print("Fail")
