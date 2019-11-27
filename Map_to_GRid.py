@@ -5,16 +5,20 @@ Convert the given Google Map Image into Grid
 with just the roads
 '''
 from PIL import Image
+from Grid_Solver import Grid
 
-WALL = 0
-PATH = 1
-VALID_PATH = 2
-INVALID_PATH = 3
+TET = 0
+ROAD = 1
+PATH_FOllOWED = 2
+STARTPOINT = 3
 ENDPOINT = 4
 
 COLORS = {
-    WALL: (0, 0, 0),
-    PATH: (255, 255, 255),
+    TET: (0, 0, 0),
+    ROAD: (255, 255, 255),
+    STARTPOINT: (255, 0, 0),
+    ENDPOINT: (0, 0, 255),
+    PATH_FOllOWED: (0, 255, 0)
 
 }
 
@@ -59,7 +63,7 @@ def save_as_grid(maze, basename, blockSize=20):
     w_blocks = len(maze[0])
     h_blocks = len(maze)
     SIZE = (w_blocks * blockSize, h_blocks * blockSize)
-    img = Image.new("RGB", SIZE, color=COLORS[WALL])
+    img = Image.new("RGB", SIZE, color=COLORS[TET])
 
     for y, row in enumerate(maze):
         for x, block_ID in enumerate(row):
@@ -106,10 +110,36 @@ def img_to_grid(filename):
     save_as_grid(new_arr, filename, blockSize=5)
     fptr_2 = filename + "only_white.png"
     IMG.save(fptr_2)
-    for i in range(len(new_arr)):
-        print(new_arr[i])
+
+    return(new_arr)
 
 
 if __name__ == "__main__":
-    basename = "trial_image.PNG"
-    img_to_grid(basename)
+    basename = "trial_image.png"
+    grid_from_img = img_to_grid(basename)
+    print("Grid Generated")
+    start_pt = (0, 23)
+    end_pt = [(248, 301)]
+    grid = Grid(grid_from_img, start_pt, end_pt)
+    print("Object formed")
+    result, path_followed = grid.shortest_path()
+    print("Shortest path calculated")
+    filename = basename + "only_white.png"
+    IMG = Image.open(filename).convert("RGB")
+    if result:
+        print("Congo")
+        # print("Path followed : ")
+        # print(list(reversed(path_followed)))
+        for ele in path_followed:
+            if ele == start_pt:
+                grid_from_img[ele[0]][ele[1]] = 3
+            elif ele in end_pt:
+                print("Here")
+                grid_from_img[ele[0]][ele[1]] = 4
+            else:
+                grid_from_img[ele[0]][ele[1]] = 2
+        final_filename = basename + "path_followed"
+        save_as_grid(grid_from_img, final_filename, blockSize=20)
+        print("Image saved")
+    else:
+        print("Fail")
