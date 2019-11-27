@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 27 14:36:45 2019
+
+@author: Wayne Monteiro
+"""
+
 '''
 Final Software Carpentry Project
 Contributors - Prabhjot K. Luthra, Wayne D. Monteiro
@@ -70,7 +77,7 @@ def save_as_grid(maze, basename, blockSize=20):
             set_color(img, x, y, blockSize, COLORS[block_ID])
 
     img.save("%s_recreated_grid.png"
-             % (basename))
+             % (basename.strip(".png")))
 
 
 def img_to_grid(filename):
@@ -87,19 +94,19 @@ def img_to_grid(filename):
             if pxl == (255, 255, 255):
                 IMG.putpixel((x, y), (255, 255, 255))
     # Storing as a Grid
-    new_arr = [[0 for i in range(0, width, 2)] for j in range(0, height, 3)]
+    new_arr = [[0 for i in range(0, width, 2)] for j in range(0, height, 2)]
     avg_sum_store = []
     newy = 0
-    for y in range(0, height, 3):
+    for y in range(0, height, 2):
         newx = 0
         for x in range(0, width, 2):
             sum_val = 0
             if x != width - 1 and y != height - 1:
-                for b in range(3):
+                for b in range(2):
                     for a in range(2):
                         val = IMG.getpixel((x + a, y + b))
                         sum_val = sum_val + val[0] + val[1] + val[2]
-                avg_sum = sum_val / (6 * 3)
+                avg_sum = sum_val / (4 * 3)
                 avg_sum_store.append(avg_sum)
                 if avg_sum < 42.5:
                     new_arr[newy][newx] = 0
@@ -107,19 +114,20 @@ def img_to_grid(filename):
                     new_arr[newy][newx] = 1
             newx = newx + 1
         newy = newy + 1
+    filename = filename.strip(".png")
     save_as_grid(new_arr, filename, blockSize=5)
-    fptr_2 = filename + "only_white.png"
+    fptr_2 = filename + "_black&white.png"
     IMG.save(fptr_2)
 
     return(new_arr)
 
 
 if __name__ == "__main__":
-    basename = "trial_image.png"
+    basename = "trial_image_4.png"
     grid_from_img = img_to_grid(basename)
     print("Grid Generated")
     start_pt = (0, 23)
-    end_pt = [(100, 205), (248, 301)]
+    end_pt = [(248, 301)]
     grid = Grid(grid_from_img, start_pt, end_pt)
     print("Object formed")
     result, path_followed = grid.shortest_path()
@@ -138,7 +146,7 @@ if __name__ == "__main__":
                 grid_from_img[ele[0]][ele[1]] = 4
             else:
                 grid_from_img[ele[0]][ele[1]] = 2
-        final_filename = basename + "path_followed"
+        final_filename = basename.strip(".png") + "_path_followed"
         save_as_grid(grid_from_img, final_filename, blockSize=20)
         print("Image saved")
     else:
