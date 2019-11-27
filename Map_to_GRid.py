@@ -119,7 +119,7 @@ if __name__ == "__main__":
     grid_from_img = img_to_grid(basename)
     print("Grid Generated")
     start_pt = (0, 23)
-    end_pt = [(248, 301)]
+    end_pt = [(100, 205), (248, 301)]
     grid = Grid(grid_from_img, start_pt, end_pt)
     print("Object formed")
     result, path_followed = grid.shortest_path()
