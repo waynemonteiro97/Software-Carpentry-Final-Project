@@ -56,7 +56,7 @@ class Grid:
                 self.end.pop(self.end.index(current_pos))
                 if len(self.end) == 0:
                     success = True
-                    break
+                    continue
                 # return [True, list(self.follow.queue)]
             else:
                 self.path.get()
@@ -71,6 +71,8 @@ class Grid:
         # total_path = len(list(self.follow.queue))
         final_path = [list(self.follow.queue)[-1]]
         counter = 0
+        if final_path[-1] not in end_pt:
+            final_path = self.mod_finalpath(end_pt)
         for i, ele in enumerate(reversed(list(self.follow.queue))):
             x = ele[0]
             y = ele[1]
@@ -78,7 +80,7 @@ class Grid:
             x2 = self.follow.queue[n - 1][0]
             y2 = self.follow.queue[n - 1][1]
             last_pos = final_path[counter]
-            if (x == last_pos[0] and (y == last_pos[1] + 1 or y == last_pos[1] - 1)) or (y == last_pos[1] and (x == last_pos[0] + 1 or x == last_pos[0] - 1)):
+            if ele not in final_path and (x == last_pos[0] and (y == last_pos[1] + 1 or y == last_pos[1] - 1)) or (y == last_pos[1] and (x == last_pos[0] + 1 or x == last_pos[0] - 1)):
                 if (x2 == last_pos[0] and (y2 == last_pos[1] + 1 or y2 == last_pos[1] - 1)) or (y2 == last_pos[1] and (x2 == last_pos[0] + 1 or x2 == last_pos[0] - 1)) and (x2, y2) in end_pt:
                     final_path.append((x2, y2))
                     counter += 1
@@ -95,8 +97,20 @@ class Grid:
         else:
             return False
 
+    def mod_finalpath(self, end_pt):
+        for ele in list(reversed(self.follow.queue)):
+            if ele in end_pt:
+                index = list(self.follow.queue).index(ele)
+                break
+        final_path = [list(self.follow.queue)[index]]
+        n = len(list(self.follow.queue))
+        for i in range(n, -1, index + 1):
+            final_path.append(list(self.follow.queue)[i])
+        return(final_path)
+
 
 if __name__ == "__main__":
+    '''
     maze = [[1, 0, 0, 0, 0, 0, 1], [1, 1, 1, 1, 0, 0, 1], [0, 0, 1, 1, 1, 0, 1]
              , [0, 0, 1, 1, 0, 0, 1], [1, 0, 0, 1, 0, 0, 1], [0, 1, 1, 1, 0, 1, 1]
              , [0, 0, 1, 1, 1, 0, 1], [1, 0, 0, 0, 1, 1, 1]]
@@ -110,3 +124,15 @@ if __name__ == "__main__":
         print(list(reversed(path_followed)))
     else:
         print("Fail")
+    maze = [[1, 0, 0, 0], [1, 1, 1, 0], [0, 1, 1, 0], [0, 1, 1, 1]]
+    start_pt = (0, 0)
+    end_pt = [(1, 2), (2, 1)]
+    grid = Grid(maze, start_pt, end_pt)
+    result, path_followed = grid.shortest_path()
+    if result:
+        print("Congo")
+        print("Path followed : ")
+        print(list(reversed(path_followed)))
+    else:
+        print("Fail")
+    '''
