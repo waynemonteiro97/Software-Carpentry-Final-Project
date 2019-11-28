@@ -1,0 +1,12 @@
+    new_arr[6][30] 
+    new_arr[36][100] 
+    new_arr[75][207] 
+    new_arr[150][300] 
+    new_arr[300][207] 
+    new_arr[310][300] 
+    new_arr[358][40] 
+    new_arr[200][350] 
+    new_arr[340][390] 
+    new_arr[200][31]
+    
+    Use these grid coordinates. They span the range of the map. the first coordinate is y and the second is x
