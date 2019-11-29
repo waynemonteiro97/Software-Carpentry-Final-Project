@@ -54,7 +54,7 @@ def set_color(img, x0, y0, dim, color):
             )
 
 
-def save_as_grid(maze, basename, blockSize=20):
+def save_as_grid(maze, basename, blockSize=90):
     '''
     This function will save the  maze  as an image file
     **Parameters***
@@ -137,7 +137,14 @@ if __name__ == "__main__":
     if result:
         print("Congo")
         # print("Path followed : ")
-        # print(list(reversed(path_followed)))
+#        print(list(reversed(path_followed)))
+        f_img = Image.open(basename).convert("RGB")
+        for i in path_followed:
+            x = round(2*i[1])
+            y = round(2*i[0])
+            f_img.putpixel((x, y), (0, 0, 0))
+        f_img.save(basename.strip(".png") + "_map_image_solution.png")
+            
         for ele in path_followed:
             if ele == start_pt:
                 grid_from_img[ele[0]][ele[1]] = 3
