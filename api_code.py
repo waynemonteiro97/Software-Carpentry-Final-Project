@@ -6,8 +6,8 @@ Created on Fri Nov 29 15:36:57 2019
 """
 
 import requests
-#api_key = "AIzaSyAps_N1zybs74cvBNqpeZK6vsQfzeUY4"
-api_key = "AIzaSyAJhA7-eaS4nEkNwJ9dktMnpnbZ4sFaaoA"
+
+api_key = ""
 url = "http://maps.googleapis.com/maps/api/staticmap?"
 location  = "Johns Hopkins University"
 center = location
