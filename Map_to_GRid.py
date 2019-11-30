@@ -13,6 +13,7 @@ with just the roads
 '''
 from PIL import Image
 from Grid_Solver import Grid
+import requests
 
 TET = 0
 ROAD = 1
@@ -85,14 +86,16 @@ def img_to_grid(filename):
     img = Image.open(filename).convert("RGB")
     width, height = img.size
     # Creating a Black Image
+   
     for x in range(width):
         for y in range(height):
             IMG.putpixel((x, y), (0, 0, 0))
     for y in range(height):
         for x in range(width):
             pxl = img.getpixel((x, y))
-            if pxl == (255, 255, 255):
+            if (pxl[0] <= 257 and pxl[0] >= 253 and pxl[1] <= 257 and pxl[1] >= 253 and pxl[2] <= 257 and pxl[2] >= 253) or (pxl[0] <= 255 and pxl[0] >= 245 and pxl[1] <= 245 and pxl[1] >= 220 and pxl[2] <= 180 and pxl[2] >= 100)  :
                 IMG.putpixel((x, y), (255, 255, 255))
+
     # Storing as a Grid
     new_arr = [[0 for i in range(0, width, 2)] for j in range(0, height, 2)]
     avg_sum_store = []
@@ -118,43 +121,63 @@ def img_to_grid(filename):
     save_as_grid(new_arr, filename, blockSize=5)
     fptr_2 = filename + "_black&white.png"
     IMG.save(fptr_2)
+    img.close()
+    IMG.close()
 
     return(new_arr)
 
+def locate_map(location,zoom):
+
+    api_key = "AIzaSyAJhA7-eaS4nEkNwJ9dktMnpnbZ4sFaaoA"
+    url = "http://maps.googleapis.com/maps/api/staticmap?"
+#    loc  = location
+    center = location
+#    zoom = zoom
+    r = requests.get("https://maps.googleapis.com/maps/api/staticmap?key="+api_key+"&center="+location+"&zoom="+str(zoom)+"&format=png&maptype=roadmap&style=element:labels%7Cvisibility:off&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.neighborhood%7Cvisibility:off&size=1230x1230")
+    s = requests.get("https://maps.googleapis.com/maps/api/staticmap?key="+api_key+"&center="+location+"&zoom="+str(zoom)+"&format=png&maptype=roadmap&size=1230x1230")
+#    print (url +"center="+center+"&zoom="+str(zoom)+"&size=1024x768&key="+api_key)
+    f = open(location + "_image_without_label.png","wb")
+    f.write(r.content)
+    f.close()
+    g = open(location + "_image_with_label.png","wb")
+    g.write(s.content)
+    g.close()
+    return (location + "_image_without_label.png")
 
 if __name__ == "__main__":
-    basename = "trial_image_4.png"
+    basename = locate_map("Udupi",15)    
+#    basename = "sample_balt.png"
     grid_from_img = img_to_grid(basename)
-    print("Grid Generated")
-    start_pt = (0, 23)
-    end_pt = [(248, 301)]
-    grid = Grid(grid_from_img, start_pt, end_pt)
-    print("Object formed")
-    result, path_followed = grid.shortest_path()
-    print("Shortest path calculated")
-    filename = basename + "only_white.png"
-    IMG = Image.open(filename).convert("RGB")
-    if result:
-        print("Congo")
-        # print("Path followed : ")
-#        print(list(reversed(path_followed)))
-        f_img = Image.open(basename).convert("RGB")
-        for i in path_followed:
-            x = round(2*i[1])
-            y = round(2*i[0])
-            f_img.putpixel((x, y), (0, 0, 0))
-        f_img.save(basename.strip(".png") + "_map_image_solution.png")
-            
-        for ele in path_followed:
-            if ele == start_pt:
-                grid_from_img[ele[0]][ele[1]] = 3
-            elif ele in end_pt:
-                print("Here")
-                grid_from_img[ele[0]][ele[1]] = 4
-            else:
-                grid_from_img[ele[0]][ele[1]] = 2
-        final_filename = basename.strip(".png") + "_path_followed"
-        save_as_grid(grid_from_img, final_filename, blockSize=20)
-        print("Image saved")
-    else:
-        print("Fail")
+#    print("Grid Generated")
+#    start_pt = (0, 23)
+#    end_pt = [(248, 301)]
+#    grid = Grid(grid_from_img, start_pt, end_pt)
+#    print("Object formed")
+#    result, path_followed = grid.shortest_path()
+#    print("Shortest path calculated")
+#    filename = basename + "only_white.png"
+#    IMG = Image.open(filename).convert("RGB")
+#    if result:
+#        print("Congo")
+#        # print("Path followed : ")
+##        print(list(reversed(path_followed)))
+#        f_img = Image.open(basename).convert("RGB")
+#        for i in path_followed:
+#            x = round(2*i[1])
+#            y = round(2*i[0])
+#            f_img.putpixel((x, y), (0, 0, 0))
+#        f_img.save(basename.strip(".png") + "_map_image_solution.png")
+#            
+#        for ele in path_followed:
+#            if ele == start_pt:
+#                grid_from_img[ele[0]][ele[1]] = 3
+#            elif ele in end_pt:
+#                print("Here")
+#                grid_from_img[ele[0]][ele[1]] = 4
+#            else:
+#                grid_from_img[ele[0]][ele[1]] = 2
+#        final_filename = basename.strip(".png") + "_path_followed"
+#        save_as_grid(grid_from_img, final_filename, blockSize=20)
+#        print("Image saved")
+#    else:
+#        print("Fail")
