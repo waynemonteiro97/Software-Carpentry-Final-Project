@@ -4,9 +4,14 @@ Contributors - Prabhjot K. Luthra, Wayne D. Monteiro
 Convert the given Google Map Image into Grid
 with just the roads
 '''
-from PIL import Image
+from PIL import Image, ImageDraw
 from Grid_Solver_2 import Grid
 import copy
+import shutil
+import matplotlib.pyplot as plt
+import mpldatacursor
+import requests
+import warnings
 
 TET = 0
 ROAD = 1
@@ -74,18 +79,20 @@ def save_as_grid(maze, basename, blockSize=90):
              % (basename.strip(".png")))
 
 
+
 def img_to_grid(filename):
     IMG = Image.open(filename).convert("RGB")
     img = Image.open(filename).convert("RGB")
     width, height = img.size
     # Creating a Black Image
+   
     for x in range(width):
         for y in range(height):
             IMG.putpixel((x, y), (0, 0, 0))
     for y in range(height):
         for x in range(width):
             pxl = img.getpixel((x, y))
-            if pxl == (255, 255, 255):
+            if (pxl[0] <= 257 and pxl[0] >= 253 and pxl[1] <= 257 and pxl[1] >= 253 and pxl[2] <= 257 and pxl[2] >= 253) or (pxl[0] <= 255 and pxl[0] >= 245 and pxl[1] <= 245 and pxl[1] >= 220 and pxl[2] <= 180 and pxl[2] >= 100)  :
                 IMG.putpixel((x, y), (255, 255, 255))
     # Storing as a Grid
     new_arr = [[0 for i in range(0, width, 2)] for j in range(0, height, 2)]
@@ -112,6 +119,8 @@ def img_to_grid(filename):
     save_as_grid(new_arr, filename, blockSize=5)
     fptr_2 = filename + "_black&white.png"
     IMG.save(fptr_2)
+    img.close()
+    IMG.close()
     return(new_arr)
 
 
@@ -132,39 +141,27 @@ def locate_map(location, zoom):
 
 
 if __name__ == "__main__":
-    basename = "trial_image.png"
-    # basename = locate_map('Udupi', 15)
+    location = 'Udupi'
+    zoom = 15
+    basename = locate_map(location, zoom)
     grid_from_img = img_to_grid(basename)
     print("Grid Generated")
-    '''
-    grid_from_img[313][82] = 3 # Charm City Cakes
-    grid_from_img[320][115] = 3 # PaperMoon Dinner
-    grid_from_img[224][197] = 3 # Chipotle
-    grid_from_img[190][147] = 3 # BLC
-    grid_from_img[193][163] = 3 # East Gate
-    grid_from_img[205][324] = 3 # Giant Food
-    grid_from_img[150][194] = 3 # Marylander
-    grid_from_img[251][144] = 3 # BMA
-    grid_from_img[99][140] = 3 # North Gate
-    save_as_grid(grid_from_img, "modified_trial", blockSize=10)
-    '''
-    start_end_choices = {'1': "North Gate", '2': "BLC", '3': "East Gate",
-                         '4': "Marylander", '5': "Chipotle", '6': "Giant Food",
-                         '7': "BMA", '8': "PaperMoon Diner", '9': "Charm City Cakes"}
-    start_end_coord = {'1': (99, 140), '2': (190, 147), '3': (193, 163),
-                       '4': (150, 194), '5': (224, 197), '6': (205, 324),
-                       '7': (251, 144), '8': (320, 115), '9': (313, 882)}
-    print("Choices for start and end Points are : ")
-    print(start_end_choices)
-    start_choice = input("Enter choice for start point")
-    start_pt = start_end_coord[start_choice]
+    print("Make a list of start and endpoints and close when done")
+    im = plt.imread(location + "_image_with_label.png")
+    plt.imshow(im)
+    warnings.filterwarnings("ignore")
+    mpldatacursor.datacursor(hover=True, bbox=dict(alpha=1, fc='w'), formatter="Here".format)
+    plt.show()
+    start_x = input("Enter start point X value : ")
+    start_y = input("Enter start point Y value : ")
+    start_pt = (int(int(start_y) / 2), int(int(start_x) / 2))
     end_pt = []
-    n = int(input("Number of end points"))
-    print("Enter choice for end points")
-    choice = None
+    n = int(input("Enter the number of end points : "))
+    print("Enter the end points: ")
     for i in range(n):
-        choice = input()
-        end_pt.append(start_end_coord[choice])
+        end_x = input("X value: ")
+        end_y = input("Y value: ")
+        end_pt.append((int(int(end_y) / 2), int(int(end_x) / 2)))
     print("Start and End points Recorded")
     start_pt_list = copy.deepcopy(start_pt)
     end_pt_list = copy.deepcopy(end_pt)
@@ -178,7 +175,9 @@ if __name__ == "__main__":
         start_pt = new_origin
         ITER += 1
     images = []
-    basename = "trial_image_with_labels.png"
+    basename = location + "_image_with_label.png"
+    shutil.copy(basename, basename.strip(".png") + "_trial.png")
+    basename = basename.strip(".png") + "_trial.png"
     if ITER <= MAXITER:
         print("Congo")
         # font = ImageFont.truetype("arial.pil", 8)
@@ -189,7 +188,7 @@ if __name__ == "__main__":
                 f_img = Image.open(basename).convert("RGB")
                 f_img.putpixel((x, y), (255, 0, 0))
                 # draw = ImageDraw.Draw(f_img)
-                # draw.point((x, y), (255, 0, 0))
+                # draw.point([((x - 1), (y - 1)), (x, y)], fill=(255, 0, 0))
                 # draw.text((x - 1, y - 1), ele, (255, 255, 255), font=font)
                 f_img.save(basename)
                 images.append(f_img)
@@ -199,7 +198,7 @@ if __name__ == "__main__":
                 f_img = Image.open(basename).convert("RGB")
                 f_img.putpixel((x, y), (0, 255, 0))
                 # draw = ImageDraw.Draw(f_img)
-                # draw.point((x, y), (0, 255, 0))
+                # draw.point([((x - 1), (y - 1)), (x, y)], (0, 255, 0))
                 f_img.save(basename)
                 images.append(f_img)
             else:
@@ -210,6 +209,6 @@ if __name__ == "__main__":
                 f_img.save(basename)
                 images.append(f_img)
         images[0].save(basename.strip(".png") + "_solution.gif", save_all=True, append_images=images[1:], optimize=False, duration=60, loop=0)
-        print("Image saved")
+        print("Solution saved as a GIF")
     else:
         print("Fail")
