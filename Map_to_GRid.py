@@ -12,7 +12,7 @@ Convert the given Google Map Image into Grid
 with just the roads
 '''
 from PIL import Image
-from Grid_Solver import Grid
+from Grid_Solver_2 import Grid
 import requests
 
 TET = 0
