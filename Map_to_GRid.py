@@ -128,7 +128,7 @@ def img_to_grid(filename):
 
 def locate_map(location, zoom):
 
-    api_key = "..."
+    api_key = "AIzaSyAJhA7-eaS4nEkNwJ9dktMnpnbZ4sFaaoA"
     url = "http://maps.googleapis.com/maps/api/staticmap?"
     center = location
     r = requests.get("https://maps.googleapis.com/maps/api/staticmap?key="+api_key+"&center="+location+"&zoom="+str(zoom)+"&format=png&maptype=roadmap&style=element:labels%7Cvisibility:off&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.neighborhood%7Cvisibility:off&size=1230x1230")
@@ -203,7 +203,9 @@ def save_as_GIF(location, path_followed):
             x = round(2 * ele[1])
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
-            f_img.putpixel((x, y), (0, 0, 0))
+#            f_img.putpixel((x, y), (0, 0, 0))
+            draw_path = ImageDraw.Draw(f_img)
+            draw_path.ellipse((x-1, y-1, x+1, y+1), fill = (154, 205, 50) )
             f_img.save(basename)
             images.append(f_img)
     images[0].save(basename.strip(".png") + "_solution.gif", save_all=True, append_images=images[1:], optimize=False, duration=40, loop=0)
@@ -232,7 +234,7 @@ def get_final_path(grid_from_img, start_pt, end_pt):
 
 
 if __name__ == "__main__":
-    location = 'Johns Hopkins University'
+    location = 'Hohns Hopkins University'
     zoom = 15
     basename = locate_map(location, zoom)
     grid_from_img = img_to_grid(basename)
@@ -251,6 +253,12 @@ if __name__ == "__main__":
     for i, point in enumerate(point_list):
         if i != 0:
             print(point)
+    image_points = Image.open(location + "_image_with_label.png").convert("RGB")
+    draw = ImageDraw.Draw(image_points)
+    for i in point_list:
+        draw.ellipse((i[0]-4, i[1]-4, i[0]+4, i[1]+4), fill = 'GREEN', outline = 'blue' )
+        image_points.save(location + "_image_with_label.png")
+#    image_points.close()
     start_pt_list = copy.deepcopy(start_pt)
     end_pt_list = copy.deepcopy(end_pt)
     verify_ans = input("Do you want to verify these coordinates (Y/N)? ")
