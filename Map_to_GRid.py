@@ -128,7 +128,7 @@ def img_to_grid(filename):
 
 def locate_map(location, zoom):
 
-    api_key = "AIzaSyAJhA7-eaS4nEkNwJ9dktMnpnbZ4sFaaoA"
+    api_key = "..."
     url = "http://maps.googleapis.com/maps/api/staticmap?"
     center = location
     r = requests.get("https://maps.googleapis.com/maps/api/staticmap?key="+api_key+"&center="+location+"&zoom="+str(zoom)+"&format=png&maptype=roadmap&style=element:labels%7Cvisibility:off&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.neighborhood%7Cvisibility:off&size=1230x1230")
