@@ -39,6 +39,17 @@ class Grid:
         else:
             return False
 
+    def mod_finalpath(self, end_pt):
+        for ele in list(reversed(self.follow.queue)):
+            if ele in end_pt:
+                index = list(self.follow.queue).index(ele)
+                break
+        final_path = [list(self.follow.queue)[index]]
+        n = len(list(self.follow.queue))
+        for i in range(n, -1, index + 1):
+            final_path.append(list(self.follow.queue)[i])
+        return(final_path)
+
     def shortest_path(self):
         '''
         Breadth for Search Algorithm
@@ -48,8 +59,8 @@ class Grid:
         end_pt = copy.deepcopy(self.end)
         # if the start and the end points are not a valid path
         if self.grid[self.start[0]][self.start[1]] != 1:
-            for end in self.end:
-                if self.grid[end[0]][end[1]] != 1:
+            for ele in self.end:
+                if self.grid[ele[0]][ele[1]] != 1:
                     return -1
         # Start point is now visited
         visited_grid[self.start[0]][self.start[1]] = True
@@ -90,6 +101,7 @@ class Grid:
 
 
 if __name__ == "__main__":
+    '''
     maze = [[1, 0, 0, 0, 0, 0, 1], [1, 1, 1, 1, 0, 0, 1], [0, 0, 1, 1, 1, 0, 1]
              , [0, 0, 1, 1, 0, 0, 1], [1, 0, 0, 1, 0, 0, 1], [0, 1, 1, 1, 0, 1, 1]
              , [0, 0, 1, 1, 1, 0, 1], [1, 0, 0, 0, 1, 1, 1]]
@@ -112,3 +124,4 @@ if __name__ == "__main__":
         print(path_followed)
     else:
         print("Fail")
+    '''

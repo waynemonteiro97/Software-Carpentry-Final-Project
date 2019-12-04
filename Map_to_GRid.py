@@ -6,18 +6,21 @@ with just the roads
 '''
 from PIL import Image, ImageDraw
 from Grid_Solver_2 import Grid
+from Comparison_EndPts import Compare
 import copy
 import shutil
 import matplotlib.pyplot as plt
 import mpldatacursor
 import requests
 import warnings
+import cv2
 
 TET = 0
 ROAD = 1
 PATH_FOllOWED = 2
 STARTPOINT = 3
 ENDPOINT = 4
+point_list = []
 
 COLORS = {
     TET: (0, 0, 0),
@@ -25,7 +28,6 @@ COLORS = {
     STARTPOINT: (255, 0, 0),
     ENDPOINT: (0, 0, 255),
     PATH_FOllOWED: (0, 255, 0)
-
 }
 
 
@@ -126,7 +128,7 @@ def img_to_grid(filename):
 
 def locate_map(location, zoom):
 
-    api_key = "...."
+    api_key = "AIzaSyAJhA7-eaS4nEkNwJ9dktMnpnbZ4sFaaoA"
     url = "http://maps.googleapis.com/maps/api/staticmap?"
     center = location
     r = requests.get("https://maps.googleapis.com/maps/api/staticmap?key="+api_key+"&center="+location+"&zoom="+str(zoom)+"&format=png&maptype=roadmap&style=element:labels%7Cvisibility:off&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.neighborhood%7Cvisibility:off&size=1230x1230")
@@ -140,31 +142,81 @@ def locate_map(location, zoom):
     return (location + "_image_without_label.png")
 
 
-if __name__ == "__main__":
-    location = 'Udupi'
-    zoom = 15
-    basename = locate_map(location, zoom)
-    grid_from_img = img_to_grid(basename)
-    print("Grid Generated")
-    print("Make a list of start and endpoints and close when done")
+def open_img(location):
+    '''
+    https://stackoverflow.com/questions/28327020/opencv-detect-mouse-position-clicking-over-a-picture
+    '''
+    point_list = []
+    filename = location + "_image_with_label.png"
+
+    def onMouse(event, x, y, flags, param):
+        global point_list
+        if event == cv2.EVENT_LBUTTONDOWN:
+            print("Point Recorded")
+            cv2.circle(im,(x,y),100,(255,0,0),-1)
+            point_list.append((x, y))
+
+    im = cv2.imread(filename)
+    cv2.namedWindow("Map")
+    cv2.setMouseCallback("Map", onMouse)
+
+    start_pt = None
+    end_pt = []
+
+    while True:
+        im = cv2.imread(filename)
+        cv2.imshow("Map", im)
+        k = cv2.waitKey(20) & 0xFF
+        if k == 27:
+            break
+
+    cv2.destroyAllWindows()
+
+def save_as_GIF(location, path_followed):
+    images = []
+    basename = location + "_image_with_label.png"
+    shutil.copy(basename, basename.strip(".png") + "_trial.png")
+    basename = basename.strip(".png") + "_trial.png"
+    f_img = Image.open(basename).convert("RGB")
+    # font = ImageFont.truetype("arial.pil", 8)
+    for ele in path_followed:
+        if ele in end_pt_list:
+            x = round(2 * ele[1])
+            y = round(2 * ele[0])
+            f_img = Image.open(basename).convert("RGB")
+            f_img.putpixel((x, y), (255, 0, 0))
+            # draw = ImageDraw.Draw(f_img)
+            # draw.point([((x - 1), (y - 1)), (x, y)], fill=(255, 0, 0))
+            # draw.text((x - 1, y - 1), ele, (255, 255, 255), font=font)
+            f_img.save(basename)
+            images.append(f_img)
+        elif ele == start_pt_list:
+            x = round(2 * ele[1])
+            y = round(2 * ele[0])
+            f_img = Image.open(basename).convert("RGB")
+            f_img.putpixel((x, y), (0, 255, 0))
+            # draw = ImageDraw.Draw(f_img)
+            # draw.point([((x - 1), (y - 1)), (x, y)], (0, 255, 0))
+            f_img.save(basename)
+            images.append(f_img)
+        else:
+            x = round(2 * ele[1])
+            y = round(2 * ele[0])
+            f_img = Image.open(basename).convert("RGB")
+            f_img.putpixel((x, y), (0, 0, 0))
+            f_img.save(basename)
+            images.append(f_img)
+    images[0].save(basename.strip(".png") + "_solution.gif", save_all=True, append_images=images[1:], optimize=False, duration=40, loop=0)
+
+
+def mpl_cursor_verify(location):
     im = plt.imread(location + "_image_with_label.png")
     plt.imshow(im)
     warnings.filterwarnings("ignore")
     mpldatacursor.datacursor(hover=True, bbox=dict(alpha=1, fc='w'), formatter="Here".format)
     plt.show()
-    start_x = input("Enter start point X value : ")
-    start_y = input("Enter start point Y value : ")
-    start_pt = (int(int(start_y) / 2), int(int(start_x) / 2))
-    end_pt = []
-    n = int(input("Enter the number of end points : "))
-    print("Enter the end points: ")
-    for i in range(n):
-        end_x = input("X value: ")
-        end_y = input("Y value: ")
-        end_pt.append((int(int(end_y) / 2), int(int(end_x) / 2)))
-    print("Start and End points Recorded")
-    start_pt_list = copy.deepcopy(start_pt)
-    end_pt_list = copy.deepcopy(end_pt)
+
+def get_final_path(grid_from_img, start_pt, end_pt):
     path_followed = []
     MAXITER = len(end_pt) + 1
     ITER = 0
@@ -174,41 +226,53 @@ if __name__ == "__main__":
         path_followed += list(reversed(path_followed_new))
         start_pt = new_origin
         ITER += 1
-    images = []
-    basename = location + "_image_with_label.png"
-    shutil.copy(basename, basename.strip(".png") + "_trial.png")
-    basename = basename.strip(".png") + "_trial.png"
+
+    return(ITER, path_followed)
+
+
+
+if __name__ == "__main__":
+    location = 'Johns Hopkins University'
+    zoom = 15
+    basename = locate_map(location, zoom)
+    grid_from_img = img_to_grid(basename)
+    print("Grid Generated")
+    print("Make a list of start and endpoints and close when done")
+    open_img(location)
+    start_pt = (int(point_list[0][1]/2), int(point_list[0][0]/2))
+    end_pt = []
+    for i in range(len(point_list)):
+        if i != 0:
+            end_pt.append((int(point_list[i][1]/2), int(point_list[i][0]/2)))
+    print("Start and End points Recorded as :")
+    print("START POINT")
+    print(point_list[0])
+    print("END POINT")
+    for i, point in enumerate(point_list):
+        if i != 0:
+            print(point)
+    start_pt_list = copy.deepcopy(start_pt)
+    end_pt_list = copy.deepcopy(end_pt)
+    verify_ans = input("Do you want to verify these coordinates (Y/N)? ")
+    if verify_ans == 'Y':
+        mpl_cursor_verify(location)
+    MAXITER = len(end_pt) + 1
+    ITER, path_followed = get_final_path(grid_from_img, start_pt, end_pt)
     if ITER <= MAXITER:
-        print("Congo")
-        # font = ImageFont.truetype("arial.pil", 8)
-        for ele in path_followed:
-            if ele in end_pt_list:
-                x = round(2 * ele[1])
-                y = round(2 * ele[0])
-                f_img = Image.open(basename).convert("RGB")
-                f_img.putpixel((x, y), (255, 0, 0))
-                # draw = ImageDraw.Draw(f_img)
-                # draw.point([((x - 1), (y - 1)), (x, y)], fill=(255, 0, 0))
-                # draw.text((x - 1, y - 1), ele, (255, 255, 255), font=font)
-                f_img.save(basename)
-                images.append(f_img)
-            elif ele == start_pt_list:
-                x = round(2 * ele[1])
-                y = round(2 * ele[0])
-                f_img = Image.open(basename).convert("RGB")
-                f_img.putpixel((x, y), (0, 255, 0))
-                # draw = ImageDraw.Draw(f_img)
-                # draw.point([((x - 1), (y - 1)), (x, y)], (0, 255, 0))
-                f_img.save(basename)
-                images.append(f_img)
-            else:
-                x = round(2 * ele[1])
-                y = round(2 * ele[0])
-                f_img = Image.open(basename).convert("RGB")
-                f_img.putpixel((x, y), (0, 0, 0))
-                f_img.save(basename)
-                images.append(f_img)
-        images[0].save(basename.strip(".png") + "_solution.gif", save_all=True, append_images=images[1:], optimize=False, duration=60, loop=0)
-        print("Solution saved as a GIF")
+        print("Congratulations SOLUTION FOUND")
+        save_as_GIF(location, path_followed)
+        print("Solution saved as a GIF! Check your folders!")
     else:
         print("Fail")
+
+    comp_ans = input("Do you want to get even a shorter path (Y/N)? ")
+    if comp_ans == "Y":
+        Path_Compare = Compare(grid_from_img, path_followed, start_pt_list, end_pt_list)
+        ele, reduction, path = Path_Compare.max_reduce()
+        end_pt_list.remove(ele)
+        reduction = str(round(reduction, 2))
+        print("Reduction % = ", reduction)
+        save_ans = input("Do you want to save the new path as your final path (Y/N)? ")
+        if save_ans == 'Y':
+            save_as_GIF(location, path)
+            print("Same file overwritten! Check your folders!")
