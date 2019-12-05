@@ -21,13 +21,13 @@ Motivation- If you're carpooling with a bunch of friends, you might want to choo
 4. The code will find the solution path for you and store multiple images in the current directory.
    The files that will be of most use to you will be: location_image_with_label_trial_solution.gif and            location_image_with_label_trial.png; where location is what you've entered before.
   For your information, the other image files found, were used by the code:
-  a. location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered in by the user <br>
+  ### location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered in by the user <br>
       ![alt test](Johns Hopkins University_image_with_label.png)
-  b. location_image_without_label_black&white.png -- a black and white version of the map for the code to create a grid <br>
+  ### location_image_without_label_black&white.png -- a black and white version of the map for the code to create a grid <br>
       ![alt test](Johns Hopkins University_image_without_label_black&white.png)
-  c. location_image_without_label_recreated_grid.png -- the grid version of the map <br>
+  ### location_image_without_label_recreated_grid.png -- the grid version of the map <br>
       ![alt test](Johns Hopkins University_image_without_label_recreated_grid.png)
-  d. location_image_without_label.png -- the map without labels which the code uses to create the black and white version of the map <br>
+  ### location_image_without_label.png -- the map without labels which the code uses to create the black and white version of the map <br>
       ![alt test](Johns Hopkins University_image_without_label.png)
 
 ## Shortcomings:
