@@ -36,6 +36,10 @@ if __name__ == "__main__":
 4. The code will find the solution path for you and store multiple images in the current directory.<br>
 
 The files that will be of most use to you will be: location_image_with_label_trial_solution.gif and            location_image_with_label_trial.png; where location is what you've entered before. <br>
+### location_image_with_label_trial_solution.gif -- a gif file drawing the solution
+![alt test](Johns Hopkins University_image_with_label_trial_solution.gif) <br>
+### location_image_with_label_trial.png -- a gif file drawing the solution
+![alt test](Johns Hopkins University_image_with_label_trial.png) <br>
   For your information, the other image files found, were used by the code:
 ### location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered in by the user <br>
       ![alt test](Johns Hopkins University_image_with_label.png) <br>
