@@ -15,11 +15,11 @@ If you're carpooling with a bunch of friends, you might want to choose the short
 9. In addition, it finds out the stop that most decreases the distance travelled and offers to remove it from the solution path. This is useful when deciding if the removal of a single stop can make a large difference when time of travel is concerned and if it warrants the need of another vehicle for whom this additional stop will not make a difference. The code can also calculate the actual distance travelled based on the zoom level and pixels travelled and the cost of fuel consumption. <br>
 
 ## What the user needs to do?
-1. The user needs to download the following python files from the repository into a folder: 
+STEP 1 - The user needs to download the following python files from the repository into a folder: 
 <p align="center">
    <strong> Grid_Solver_2.py, Map_to_GRid.py and Comparison_EndPts.py </strong>
 </p> 
-2. The user will need to enter the location (of the region in which they wish to travel) in line #"INSERT LINE NUMBER". You can either enter the location name (eg. "Baltimore", "Johns Hopkins University", "Oerlikon, Zurich", "3333 North Charles Street, Baltimore", etc.) or the latitude and longitude (eg. "47.65,-119.42"). Whatever format you choose, make sure you enclose it within double quotations. You can also adjust the zoom level of the region you want the code to run in. Zoom levels are rational numbers that typically lie between 1 and 21 (eg. 10.5, 19.1, 20, etc.). Some maps may have more information at higher zoom levels than others <br>
+STEP 2 - The user will need to enter the location (of the region in which they wish to travel) in line #"INSERT LINE NUMBER". You can either enter the location name (eg. "Baltimore", "Johns Hopkins University", "Oerlikon, Zurich", "3333 North Charles Street, Baltimore", etc.) or the latitude and longitude (eg. "47.65,-119.42"). Whatever format you choose, make sure you enclose it within double quotations. You can also adjust the zoom level of the region you want the code to run in. Zoom levels are rational numbers that typically lie between 1 and 21 (eg. 10.5, 19.1, 20, etc.). Some maps may have more information at higher zoom levels than others <br>
 ```markdown
 if __name__ == "__main__":
     location = 'Johns Hopkins University'
@@ -27,13 +27,13 @@ if __name__ == "__main__":
     ...
 ```
 
-3. Run the code and wait for a pop-up of the map to show up. Once this happens right click ONLY on the road parts of the map that are closest to the stop points that you want. Once you have clicked on all the points you want, press the ESC key to exit the pop-up window.<br>
+STEP 3 - Run the code and wait for a pop-up of the map to show up. Once this happens right click ONLY on the road parts of the map that are closest to the stop points that you want. Once you have clicked on all the points you want, press the ESC key to exit the pop-up window.<br>
 ### The map that shows up in the pop-up window <br>
 ![alt test](Screenshot (14).png) <br>
 ### The code records every point clicked <br>
 ![alt test](Screenshot (15).png) <br>
 <br>
-4. The code will find the solution path for you and store multiple images in the current directory.<br>
+STEP 4 - The code will find the solution path for you and store multiple images in the current directory.<br>
 
 The files that will be of most use to you will be: location_image_with_label_trial_solution.gif and            location_image_with_label_trial.png; where location is what you've entered before. <br>
 
