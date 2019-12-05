@@ -42,12 +42,12 @@ The files that will be of most use to you will be: location_image_with_label_tri
   For your information, the other image files found, were used by the code:
 ### location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered in by the user <br>
 ![alt test](Johns Hopkins University_image_with_label.png) <br>
+### location_image_without_label.png -- the map without labels which the code uses to create the black and white version of the map <br>
+![alt test](Johns Hopkins University_image_without_label.png)
 ### location_image_without_label_black&white.png -- a black and white version of the map for the code to create a grid <br>
 ![alt test](Johns Hopkins University_image_without_label_black&white.png) <br>
 ### location_image_without_label_recreated_grid.png -- the grid version of the map <br>
 ![alt test](Johns Hopkins University_image_without_label_recreated_grid.png) <br>
-### location_image_without_label.png -- the map without labels which the code uses to create the black and white version of the map <br>
-![alt test](Johns Hopkins University_image_without_label.png)
 
 ## Shortcomings:
 The algorithm is not perfect. It cannot distinguish between 2 way roads and 1 way roads, so a path can go in both directions on a 1 way road. If your map has highways in it, the algorithm is going to treat it like a regular road which means that a path can cut into and leave a highway anywhere (which does not translate well into real life situations)
