@@ -1,8 +1,8 @@
 
 # Welcome to the Shortest-Path-Between-Multiple-Pick-up-Points-in-a-Map-Optimiser
 
-Need to talk about :
-Motivation- If you're carpooling with a bunch of friends, you might want to choose the shortest path that connects all the pick-up or drop off destinations so that you dont end up driving in circles or up and down the same street unnecessarily. What's that? You don't have friends because you're busy running an Uber-like company and need to make sure your vehicles drive the optimum route so that you reach the most customers in the least amount of time using the least amount of fuel. Wait what?! Your company did'nt work out and you decided to move into the public transportation sector and have been asked to knock off a few bust stops so that the new bus route caters to the busier parts of town. If you are any of these people, then you're in luck because our code can help you out!
+## Who would want to use this?
+If you're carpooling with a bunch of friends, you might want to choose the shortest path that connects all the pick-up or drop off destinations so that you dont end up driving in circles or up and down the same street unnecessarily. What's that? You don't have friends because you're busy running an Uber-like company and need to make sure your vehicles drive the optimum route so that you reach the most customers in the least amount of time using the least amount of fuel. Wait what?! Your company did'nt work out and you decided to move into the public transportation sector and have been asked to knock off a few bust stops so that the new bus route caters to the busier parts of town. If you are any of these people, then you're in luck because our code can help you out!
 
 ## How it works?
 1. The user inputs the location in which all the pick-up/drop-off locations are found. The google maps API gets the map of the requested location
@@ -21,13 +21,13 @@ Motivation- If you're carpooling with a bunch of friends, you might want to choo
 4. The code will find the solution path for you and store multiple images in the current directory.
    The files that will be of most use to you will be: location_image_with_label_trial_solution.gif and            location_image_with_label_trial.png; where location is what you've entered before.
   For your information, the other image files found, were used by the code:
-  ### location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered in by the user <br>
-      ![alt test](Johns Hopkins University_image_with_label.png)
-  ### location_image_without_label_black&white.png -- a black and white version of the map for the code to create a grid <br>
-      ![alt test](Johns Hopkins University_image_without_label_black&white.png)
-  ### location_image_without_label_recreated_grid.png -- the grid version of the map <br>
-      ![alt test](Johns Hopkins University_image_without_label_recreated_grid.png)
-  ### location_image_without_label.png -- the map without labels which the code uses to create the black and white version of the map <br>
+### location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered in by the user <br>
+      ![alt test](Johns Hopkins University_image_with_label.png) <br>
+### location_image_without_label_black&white.png -- a black and white version of the map for the code to create a grid <br>
+      ![alt test](Johns Hopkins University_image_without_label_black&white.png) <br>
+### location_image_without_label_recreated_grid.png -- the grid version of the map <br>
+      ![alt test](Johns Hopkins University_image_without_label_recreated_grid.png) <br>
+### location_image_without_label.png -- the map without labels which the code uses to create the black and white version of the map <br>
       ![alt test](Johns Hopkins University_image_without_label.png)
 
 ## Shortcomings:
