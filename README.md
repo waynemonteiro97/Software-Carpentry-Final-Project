@@ -1,5 +1,5 @@
-# Software Carpentry Final Project
-Welcome to the Shortest-Path-Between-Multiple-Pick-up-Points-in-a-Map-Optimiser
+
+# Welcome to the Shortest-Path-Between-Multiple-Pick-up-Points-in-a-Map-Optimiser
 
 Need to talk about :
 Motivation- If you're carpooling with a bunch of friends, you might want to choose the shortest path that connects all the pick-up or drop off destinations so that you dont end up driving in circles or up and down the same street unnecessarily. What's that? You don't have friends because you're busy running an Uber-like company and need to make sure your vehicles drive the optimum route so that you reach the most customers in the least amount of time using the least amount of fuel. Wait what?! Your company failed and you decided to move into the public transportation sector and have been asked to knock off a few bust stops so that the new bus route caters to the busier parts of town. If you are any of these people, then you're in luck because our code can help you out!
