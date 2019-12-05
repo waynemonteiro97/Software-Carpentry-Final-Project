@@ -29,9 +29,9 @@ if __name__ == "__main__":
 <br>
 3. Run the code and wait for a pop-up of the map to show up. Once this happens right click ONLY on the road parts of the map that are closest to the stop points that you want. Once you have clicked on all the points you want, press the ESC key to exit the pop-up window.<br>
 ### The map that shows up in the pop-up window <br>
-![alt test](Screenshot(14).png) <br>
+![alt test](Screenshot (14).png) <br>
 ### The code records every point clicked <br>
-![alt test](Screenshot(15).png) <br>
+![alt test](Screenshot (15).png) <br>
 <br>
 4. The code will find the solution path for you and store multiple images in the current directory.<br>
 
