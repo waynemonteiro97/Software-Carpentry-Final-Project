@@ -94,7 +94,7 @@ def img_to_grid(filename):
     for y in range(height):
         for x in range(width):
             pxl = img.getpixel((x, y))
-            if (pxl[0] <= 257 and pxl[0] >= 253 and pxl[1] <= 257 and pxl[1] >= 253 and pxl[2] <= 257 and pxl[2] >= 253) or (pxl[0] <= 255 and pxl[0] >= 245 and pxl[1] <= 245 and pxl[1] >= 220 and pxl[2] <= 180 and pxl[2] >= 100)  :
+            if (253 <= pxl[0] <= 257 and 253 <= pxl[1] <= 257 and 253 <= pxl[2] <= 257 ) or (245 <= pxl[0] <= 255 and 220 <= pxl[1] <= 245 and 100 <= pxl[2] <= 180 )  :
                 IMG.putpixel((x, y), (255, 255, 255))
     # Storing as a Grid
     new_arr = [[0 for i in range(0, width, 2)] for j in range(0, height, 2)]
@@ -111,7 +111,7 @@ def img_to_grid(filename):
                         sum_val = sum_val + val[0] + val[1] + val[2]
                 avg_sum = sum_val / (4 * 3)
                 avg_sum_store.append(avg_sum)
-                if avg_sum < 42.5:
+                if avg_sum == 0:
                     new_arr[newy][newx] = 0
                 else:
                     new_arr[newy][newx] = 1
@@ -127,6 +127,9 @@ def img_to_grid(filename):
 
 
 def locate_map(location, zoom):
+    """
+    https://www.youtube.com/watch?v=5zH2kvDdToU
+    """
 
     api_key = "AIzaSyAJhA7-eaS4nEkNwJ9dktMnpnbZ4sFaaoA"
     url = "http://maps.googleapis.com/maps/api/staticmap?"
@@ -184,7 +187,10 @@ def save_as_GIF(location, path_followed):
             x = round(2 * ele[1])
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
-            f_img.putpixel((x, y), (255, 0, 0))
+#            f_img.putpixel((x, y), (255, 0, 0))
+            draw = ImageDraw.Draw(f_img)
+            draw.ellipse((x-4, y-4, x+4, y+4), fill = 'GREEN', outline = 'blue' )
+#            image_points.save(location + "_image_with_label.png")
             # draw = ImageDraw.Draw(f_img)
             # draw.point([((x - 1), (y - 1)), (x, y)], fill=(255, 0, 0))
             # draw.text((x - 1, y - 1), ele, (255, 255, 255), font=font)
@@ -194,7 +200,9 @@ def save_as_GIF(location, path_followed):
             x = round(2 * ele[1])
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
-            f_img.putpixel((x, y), (0, 255, 0))
+            draw = ImageDraw.Draw(f_img)
+            draw.ellipse((x-4, y-4, x+4, y+4), fill = 'RED', outline = 'RED' )
+#            f_img.putpixel((x, y), (0, 255, 0))
             # draw = ImageDraw.Draw(f_img)
             # draw.point([((x - 1), (y - 1)), (x, y)], (0, 255, 0))
             f_img.save(basename)
@@ -234,7 +242,7 @@ def get_final_path(grid_from_img, start_pt, end_pt):
 
 
 if __name__ == "__main__":
-    location = 'Hohns Hopkins University'
+    location = 'Johns Hopkins University'
     zoom = 15
     basename = locate_map(location, zoom)
     grid_from_img = img_to_grid(basename)
@@ -253,11 +261,15 @@ if __name__ == "__main__":
     for i, point in enumerate(point_list):
         if i != 0:
             print(point)
-    image_points = Image.open(location + "_image_with_label.png").convert("RGB")
-    draw = ImageDraw.Draw(image_points)
-    for i in point_list:
-        draw.ellipse((i[0]-4, i[1]-4, i[0]+4, i[1]+4), fill = 'GREEN', outline = 'blue' )
-        image_points.save(location + "_image_with_label.png")
+#    image_points = Image.open(location + "_image_with_label.png").convert("RGB")
+#    draw = ImageDraw.Draw(image_points)
+#    for i in point_list:
+#        if i == point_list[0]:
+#            draw.ellipse((i[0]-4, i[1]-4, i[0]+4, i[1]+4), fill = 'RED', outline = 'red' )
+#            image_points.save(location + "_image_with_label.png")
+#        else:
+#            draw.ellipse((i[0]-4, i[1]-4, i[0]+4, i[1]+4), fill = 'GREEN', outline = 'blue' )
+#            image_points.save(location + "_image_with_label.png")
 #    image_points.close()
     start_pt_list = copy.deepcopy(start_pt)
     end_pt_list = copy.deepcopy(end_pt)
@@ -268,7 +280,7 @@ if __name__ == "__main__":
     ITER, path_followed = get_final_path(grid_from_img, start_pt, end_pt)
     if ITER <= MAXITER:
         print("Congratulations SOLUTION FOUND")
-        save_as_GIF(location, path_followed)
+        save_as_GIF(location, path_followed )
         print("Solution saved as a GIF! Check your folders!")
     else:
         print("Fail")
