@@ -18,7 +18,7 @@ If you're carpooling with a bunch of friends, you might want to choose the short
 1. The user needs to download the following python files from the repository into a folder: 
 <p align="center">
    <strong> Grid_Solver_2.py, Map_to_GRid.py and Comparison_EndPts.py </strong>
- </p> 
+</p> 
 2. The user will need to enter the location (of the region in which they wish to travel) in line #"INSERT LINE NUMBER". You can either enter the location name (eg. "Baltimore", "Johns Hopkins University", "Oerlikon, Zurich", "3333 North Charles Street, Baltimore", etc.) or the latitude and longitude (eg. "47.65,-119.42"). Whatever format you choose, make sure you enclose it within double quotations. You can also adjust the zoom level of the region you want the code to run in. Zoom levels are rational numbers that typically lie between 1 and 21 (eg. 10.5, 19.1, 20, etc.). Some maps may have more information at higher zoom levels than others <br>
 ```markdown
 if __name__ == "__main__":
