@@ -71,13 +71,13 @@ The files that will be of most use to you will be: location_image_with_label_tri
 
 ## Shortcomings:
 
-The algorithm is not perfect. It cannot distinguish between 2 way roads and 1 way roads, so a path can go in both directions on a 1 way road. If your map has highways in it, the algorithm is going to treat it like a regular road which means that a path can cut into and leave a highway anywhere (which does not translate well into real life situations). Also it does not accunt for traffic too.
+The algorithm is not perfect. It cannot distinguish between 2 way roads and 1 way roads, so a path can go in both directions on a 1 way road. If your map has highways in it, the algorithm is going to treat it like a regular road which means that a path can cut into and leave a highway anywhere (which does not translate well into real life situations). Also it does not account for traffic too.
 
 ## Future of the Project :
 
 We can make the code better and more user interactive by accouting for single or double roads (this can be done using Google Earth Images and using ML to analyse if the road is single or double), for traffic (depending upon the real time traffic data through road sensors, GPS for other vehicles on the road and even a rough Google Earth Image), by making an app or a website using Django or Tkinter (if want to use just python) etc.
 
-## If you are still confused then Contact :
+## For more information contact :
 
 Prabhjot K. Luthra : pluthra2@.jh.edu , pluthra2 <br>
 Wayne D. Monteiro : wmontei1@jh.edu , waynemonteiro97
