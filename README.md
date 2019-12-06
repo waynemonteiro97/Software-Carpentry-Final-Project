@@ -52,7 +52,7 @@ Below is the image of the final window that appears once all the functions have 
 The files that will be of most use to you will be: location_image_with_label_trial_solution.gif, where the solution is stored and   location_image_with_label_trial.png; where location you've entered before will be stored as the loop goes.
 <br>
 #### location_image_with_label_trial.png - a png file drawing the solution
-![alt test](Johns Hopkins University_image_with_label_trial.png | width = 100)
+![alt test](Johns Hopkins University_image_with_label_trial.png)
 <br>
  For your information, the other image files found, were used by the code:
 #### location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered by the user <br>
