@@ -3,10 +3,11 @@ Part of Final Project - Comparison of paths if an end point is removed
 Author: Prabhjot Kaur
 This code was written in order to see that if any of the endpoint is removed
 from the list lets say that if we want to know that we aren't wasting time and
-fuel in just going to a point which is really far from the others. In this case maybe
-some other vehicle can be used to drop in all points in that area.
-This function calculates the minimum path length so found by the removal of a specific
-end point. Then it calculates the reduction percentage when comparing to original path.
+fuel in just going to a point which is really far from the others. In this case
+maybe some other vehicle can be used to drop in all points in that area.
+This function calculates the minimum path length so found by the removal of a
+specific end point. Then it calculates the reduction percentage when comparing
+to original path.
 '''
 import copy
 from Grid_Solver_2 import Grid
@@ -55,10 +56,10 @@ class Compare():
 
         ** Returns **
         ele_min_path : Tuple : *int*
-                     The end point whose removal reduces the path length the most
+                  The end point whose removal reduces the path length the most
         reduction : *Float*
-                  The percentage reduction in path caused by the removal of this
-                  end point
+                  The percentage reduction in path caused by the removal of
+                  this end point
         min_path : List of tuples : *int*
                  The shorter path so found by the removal of this end point
         '''

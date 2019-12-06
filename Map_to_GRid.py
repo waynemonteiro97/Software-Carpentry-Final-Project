@@ -178,8 +178,8 @@ def locate_map(location, zoom):
     as location + "_image_without_label.png"
     '''
     api_key = "AIzaSyAJhA7-eaS4nEkNwJ9dktMnpnbZ4sFaaoA"
-    url = "http://maps.googleapis.com/maps/api/staticmap?"
-    center = location
+    # url = "http://maps.googleapis.com/maps/api/staticmap?"
+    # center = location
     r = requests.get("https://maps.googleapis.com/maps/api/staticmap?key="+api_key+"&center="+location+"&zoom="+str(zoom)+"&format=png&maptype=roadmap&style=element:labels%7Cvisibility:off&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.neighborhood%7Cvisibility:off&size=1230x1230")
     s = requests.get("https://maps.googleapis.com/maps/api/staticmap?key="+api_key+"&center="+location+"&zoom="+str(zoom)+"&format=png&maptype=roadmap&size=1230x1230")
     f = open(location + "_image_without_label.png", "wb")
@@ -240,7 +240,7 @@ def save_as_GIF(location, path_followed):
              Shortest path so followed to reach all
              end points
     ** Returns **
-    Nothing! 
+    Nothing!
     '''
     images = []
     basename = location + "_image_with_label.png"
@@ -253,7 +253,7 @@ def save_as_GIF(location, path_followed):
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
             draw = ImageDraw.Draw(f_img)
-            draw.ellipse((x-4, y-4, x+4, y+4), fill = 'GREEN', outline = 'blue' )
+            draw.ellipse((x - 4, y - 4, x + 4, y + 4), fill = 'GREEN', outline = 'blue')
             f_img.save(basename)
             images.append(f_img)
         elif ele == start_pt_list:
@@ -261,7 +261,7 @@ def save_as_GIF(location, path_followed):
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
             draw = ImageDraw.Draw(f_img)
-            draw.ellipse((x-4, y-4, x+4, y+4), fill = 'RED', outline = 'RED' )
+            draw.ellipse((x - 4, y - 4, x + 4, y + 4), fill = 'RED', outline = 'RED' )
             f_img.save(basename)
             images.append(f_img)
         else:
@@ -269,7 +269,7 @@ def save_as_GIF(location, path_followed):
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
             draw_path = ImageDraw.Draw(f_img)
-            draw_path.ellipse((x-1, y-1, x+1, y+1), fill = (154, 205, 50) )
+            draw_path.ellipse((x - 1, y - 1, x + 1, y + 1), fill = (154, 205, 50) )
             f_img.save(basename)
             images.append(f_img)
     images[0].save(basename.strip(".png") + "_solution.gif", save_all=True, append_images=images[1:], optimize=False, duration=60, loop=0)

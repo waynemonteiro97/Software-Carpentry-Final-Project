@@ -18,14 +18,15 @@ this then calculates the total amount of fuel consumed and the cost of the same
 This is benificially when you want to compare two paths in terms of fuel cost
 which is a better factor for comparison than the total length
 '''
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import numpy as np
 
 
 class Cost_Analysis:
     '''
-    This class as explained above performs a fuel cost analysis for the so path followed
+    This class as explained above performs a fuel cost analysis for the so
+    path followed
     '''
 
     def __init__(self, path_followed, zoom):
@@ -35,7 +36,7 @@ class Cost_Analysis:
         ** Parameters **
         self : Object of the class
         path_followed : List of tuples : *int*
-                      The path so folllowed from the start to all the end points
+                The path so folllowed from the start to all the end points
         zoom : *int*
              Zoom level for the Google Image so chosen by the user
 
@@ -52,8 +53,8 @@ class Cost_Analysis:
         '''
         This function relates the zoom level to number of pixels
         and the distance it represents, thus carrying out a curve fitting
-        to get the function parameters (found that exponential function fits the
-        data the best).
+        to get the function parameters (found that exponential function fits
+        the data the best).
 
         ** Parameters **
         None
@@ -82,7 +83,8 @@ class Cost_Analysis:
         Y = np.asarray(Map["Meter_Pixel"])
         p_opt, p_cov = curve_fit(func, X, Y)
         '''
-        plt.plot(X, func(X, *p_opt), 'r-', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(p_opt))
+        plt.plot(X, func(X, *p_opt), 'r-'
+        , label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(p_opt))
         plt.plot(X, Y, '*r', label="Samples")
         plt.show()
         '''
@@ -91,19 +93,19 @@ class Cost_Analysis:
     def cost_analysis(self):
         '''
         This function performs fuel cost analysis for the path so followed
-        As we explained the fuel cost and milege of the vehicle is already feeded
-        (general value assumed )
+        As we explained the fuel cost and milege of the vehicle is already
+        feeded (general value assumed )
 
         ** Parameters **
         None
 
         ** Returns **
         distance_traveled : *Float*
-                          Net distance travelled by the vehicle for that path in miles
+                Net distance travelled by the vehicle for that path in miles
         fuel_consumed : *Float*
-                      Amount of fuel consumed in  gallons
+                Amount of fuel consumed in  gallons
         Net_fuel_cost : *Float*
-                     The final fuel cost so calculated
+                The final fuel cost so calculated
         '''
 
         # Assuming fuel cost as 2.6$ per gallon
@@ -130,4 +132,3 @@ if __name__ == "__main__":
     print(final_cost)
     '''
     pass
-

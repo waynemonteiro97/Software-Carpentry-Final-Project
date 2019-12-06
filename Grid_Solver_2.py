@@ -22,14 +22,14 @@ Through BFS algorithm we can draw something like a binary tree
         .......................................(0, 3) -- final end point
 To avoid these repetitions we create a copy of this grid in which the points
 which are visited are switched from 0 to 1, once we get an array of the order
-of the  points so visted we can find the path by retracing from end point to start
-point.
+of the  points so visted we can find the path by retracing from end point to
+start point.
 There are couple of errors which come up while using queues and hence these
 additional fnctions are created to tackle such errors
-Here we find the shortest distance between the start and one of the end points which
-is reached first then that becomes your new origin or start point
-in the main solver where this code is imported a loop is carried out till all the
-end points are reached
+Here we find the shortest distance between the start and one of the end points
+which is reached first then that becomes your new origin or start point
+in the main solver where this code is imported a loop is carried out till all
+the end points are reached
 '''
 import queue
 import sys
@@ -50,6 +50,7 @@ class Grid:
     multiple drop points
     Uses Breadth for Search Algorithm, hence uses queues (FIFO)
     '''
+
     def __init__(self, grid, start_pt, end_pt):
         '''
         Initialises the Class Object
