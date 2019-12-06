@@ -33,7 +33,7 @@ STEP 1 - The user needs to download the following python files from the reposito
 <br>
 STEP 2 - The user will need to enter the location (of the region in which they wish to travel) in line #"INSERT LINE NUMBER". You can either enter the location name (eg. "Baltimore", "Johns Hopkins University", "Oerlikon, Zurich", "3333 North Charles Street, Baltimore", etc.) or the latitude and longitude (eg. "47.65,-119.42"). Whatever format you choose, make sure you enclose it within double quotations. You can also adjust the zoom level of the region you want the code to run in. Zoom levels are rational numbers that typically lie between 1 and 21 (eg. 10.5, 19.1, 20, etc.). Some maps may have more information at higher zoom levels than others. Below is the image of how you can input the location and zoom level on the terminal window.
 
-![alt test](MDPO_Input.png)
+![alt test](MDPO_Input.PNG)
 <br>
 STEP 3 - Run the code and wait for a pop-up of the map to show up. Once this happens left click ONLY on the road parts of the map that are closest to the stop points that you want. Once you have clicked on all the points you want, press the ESC key to exit the pop-up window.
 <br>
@@ -42,11 +42,12 @@ STEP 3 - Run the code and wait for a pop-up of the map to show up. Once this hap
 ![alt test](Screenshot (14).png) <br>
 
 ### The code records every point clicked <br>
-![alt test](Point_Recorded.png) <br>
+![alt test](Point_Recorded.PNG) <br>
 
 STEP 4 - The code will find the solution path for you and store multiple images in the current directory. <br>
-Below is the image of the final window that appears once all the functions have been executed.
-![alt test](Final_Solution.png) <br>
+Below is the image of the final window that appears once all the functions have been executed. <br>
+
+![alt test](Final_Solution.PNG) <br>
 <hr>
 
 The files that will be of most use to you will be: location_image_with_label_trial_solution.gif, where the solution is stored and   location_image_with_label_trial.png; where location you've entered before will be stored as the loop goes.
