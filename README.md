@@ -30,14 +30,15 @@ STEP 1 - The user needs to download the following python files from the reposito
 <p align="center">
    <strong> Grid_Solver_2.py, Map_to_GRid.py and Comparison_EndPts.py </strong>
 </p> 
-STEP 2 - The user will need to enter the location (of the region in which they wish to travel) in line #"INSERT LINE NUMBER". You can either enter the location name (eg. "Baltimore", "Johns Hopkins University", "Oerlikon, Zurich", "3333 North Charles Street, Baltimore", etc.) or the latitude and longitude (eg. "47.65,-119.42"). Whatever format you choose, make sure you enclose it within double quotations. You can also adjust the zoom level of the region you want the code to run in. Zoom levels are rational numbers that typically lie between 1 and 21 (eg. 10.5, 19.1, 20, etc.). Some maps may have more information at higher zoom levels than others <br>
+<br>
+STEP 2 - The user will need to enter the location (of the region in which they wish to travel) in line #"INSERT LINE NUMBER". You can either enter the location name (eg. "Baltimore", "Johns Hopkins University", "Oerlikon, Zurich", "3333 North Charles Street, Baltimore", etc.) or the latitude and longitude (eg. "47.65,-119.42"). Whatever format you choose, make sure you enclose it within double quotations. You can also adjust the zoom level of the region you want the code to run in. Zoom levels are rational numbers that typically lie between 1 and 21 (eg. 10.5, 19.1, 20, etc.). Some maps may have more information at higher zoom levels than others. Below is the image of how you can input the location and zoom level on the terminal window.
 ```markdown
 if __name__ == "__main__":
     location = 'Johns Hopkins University'
     zoom = 15
     ...
 ```
-
+<br>
 STEP 3 - Run the code and wait for a pop-up of the map to show up. Once this happens right click ONLY on the road parts of the map that are closest to the stop points that you want. Once you have clicked on all the points you want, press the ESC key to exit the pop-up window.<br>
 ### The map that shows up in the pop-up window <br>
 ![alt test](Screenshot (14).png) <br>
@@ -46,10 +47,10 @@ STEP 3 - Run the code and wait for a pop-up of the map to show up. Once this hap
 <br>
 STEP 4 - The code will find the solution path for you and store multiple images in the current directory.<br>
 
-The files that will be of most use to you will be: location_image_with_label_trial_solution.gif and            location_image_with_label_trial.png; where location is what you've entered before. <br>
-
+The files that will be of most use to you will be: location_image_with_label_trial_solution.gif and            location_image_with_label_trial.png; where location is what you've entered before.
+<br>
 ### location_image_with_label_trial.png -- a png file drawing the solution
-![alt test](Johns Hopkins University_image_with_label_trial.png) <br>
+![alt test](Johns Hopkins University_image_with_label_trial.png | width = 100) <br>
   For your information, the other image files found, were used by the code:
 ### location_image_with_label.png -- a map that contains the labels of the regions and the stop points entered in by the user <br>
 ![alt test](Johns Hopkins University_image_with_label.png) <br>
