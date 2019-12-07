@@ -11,7 +11,7 @@ import copy
 Grid Solver Class
 Author: Prabhjot Kaur
 This code provides the shortest path between the
-start point and the end points so given using Breadh For Search
+start point and the end points so given using Breadth First Search
 Algorithm in the grid (like we did for maze!). Unlike in the maze
 solver which uses stacks which follows LIFO system, here we use queues
 which follow the FIFO system and inherently provides us with the shortest
