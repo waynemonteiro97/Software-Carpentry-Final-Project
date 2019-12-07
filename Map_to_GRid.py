@@ -379,57 +379,67 @@ if __name__ == "__main__":
 
     # 4. To get the shortest path from the start to all end points
     MAXITER = len(end_pt) + 1
-    ITER, path_followed = get_final_path(grid_from_img, start_pt, end_pt)
-    if ITER <= MAXITER:
-        print("\n" + "-" * 79)
+    valid_soln = False
+    ITER = 0
+    if grid_from_img[start_pt[0]][start_pt[1]] == 1:
+        valid_soln = True
+        for ele in end_pt:
+            if grid_from_img[ele[0]][ele[1]] != 1:
+                valid_soln = False
+                break
+    if valid_soln:
+        ITER, path_followed = get_final_path(grid_from_img, start_pt, end_pt)
+    if ITER <= MAXITER and valid_soln:
         print("Congratulations SOLUTION FOUND")
 
         # 5. Saving the solution as a GIF
         save_as_GIF(location, path_followed)
         print("Solution saved as a GIF! Check your folders!")
+
+        # 6. Ask and compute if shorter path required
+        Cost_1 = Cost_Analysis(path_followed, zoom)
+        distance_travel, fuel_amount, fuel_cost_original = Cost_1.cost_analysis()
+        print("\n" + "-" * 79)
+        print("The Fuel Cost Analysis include : ")
+        print("Distance travelled : ", distance_travel)
+        print("Amount of fuel consumed : , ", fuel_amount)
+        print("Fuel Cost : ", fuel_cost_original)
+
+        print("\n" + "-" * 79)
+        comp_ans = input("Do you want to get even a shorter path (Y/N)? ")
+
+        if comp_ans.lower() == "y":
+            Path_Compare = Compare(grid_from_img, path_followed, start_pt_list, end_pt_list)
+            ele, reduction, path = Path_Compare.max_reduce()
+            Cost_2 = Cost_Analysis(path, zoom)
+            distance_travel, fuel_amount, fuel_cost_new = Cost_2.cost_analysis()
+
+            print("\n" + "-" * 79)
+            print("The new Fuel Cost Analysis include : ")
+            print("Distance travelled : ", distance_travel)
+            print("Amount of fuel consumed : ", fuel_amount)
+            print("Fuel Cost : ", fuel_cost_new)
+
+            if reduction == 0:
+                print("Could not find a much shorter path! Sorry!")
+            else:
+                end_pt_list.remove(ele)
+                reduction = str(round(reduction, 2))
+                print("Reduction % = ", reduction)
+                print("\n" + "-" * 79)
+                save_ans = input("Do you want to save the new path as your final path (Y/N)? ")
+                if save_ans.lower() == 'y':
+                    save_as_GIF(location, path)
+                    print("Same file overwritten! Check your folders!")
+                elif save_ans.lower() == 'n':
+                    pass
+                else:
+                    raise Exception("Invalid Input")
+
+        elif comp_ans.lower() == 'n':
+            pass
+        else:
+            raise Exception("Invalid Input")
     else:
         print("Sorry could not find the solution!")
 
-    # 6. Ask and compute if shorter path required
-    Cost_1 = Cost_Analysis(path_followed, zoom)
-    distance_travel, fuel_amount, fuel_cost_original = Cost_1.cost_analysis()
-    print("\n" + "-" * 79)
-    print("The Fuel Cost Analysis include : ")
-    print("Distance travelled : ", distance_travel)
-    print("Amount of fuel consumed : , ", fuel_amount)
-    print("Fuel Cost : ", fuel_cost_original)
-
-    print("\n" + "-" * 79)
-    comp_ans = input("Do you want to get even a shorter path (Y/N)? ")
-
-    if comp_ans.lower() == "y":
-        Path_Compare = Compare(grid_from_img, path_followed, start_pt_list, end_pt_list)
-        ele, reduction, path = Path_Compare.max_reduce()
-        Cost_2 = Cost_Analysis(path, zoom)
-        distance_travel, fuel_amount, fuel_cost_new = Cost_2.cost_analysis()
-        print("\n" + "-" * 79)
-        print("The new Fuel Cost Analysis include : ")
-        print("Distance travelled : ", distance_travel)
-        print("Amount of fuel consumed : ", fuel_amount)
-        print("Fuel Cost : ", fuel_cost_new)
-
-        if reduction == 0:
-            print("Could not find a much shorter path! Sorry!")
-        else:
-            end_pt_list.remove(ele)
-            reduction = str(round(reduction, 2))
-            print("Reduction % = ", reduction)
-            print("\n" + "-" * 79)
-            save_ans = input("Do you want to save the new path as your final path (Y/N)? ")
-            if save_ans.lower() == 'y':
-                save_as_GIF(location, path)
-                print("Same file overwritten! Check your folders!")
-            elif save_ans.lower() == 'n':
-                pass
-            else:
-                raise Exception("Invalid Input")
-
-    elif comp_ans.lower() == 'n':
-        pass
-    else:
-        raise Exception("Invalid Input")
