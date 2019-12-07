@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec  6 23:01:53 2019
+
+@author: Wayne Monteiro
+"""
+from scipy.optimize import curve_fit
+import numpy as np
+# import matplotlib.pyplot as plt
 '''
 To do a Fuel Cost Analysis for the Pool ride
 Author : Prabhjot Kaur
@@ -14,13 +23,9 @@ to get meters per pixel as a function of zoom
 for the given zoom
 --  Depending upon the fuel cost and milege of the car so feeded in the code
 this then calculates the total amount of fuel consumed and the cost of the same
-
 This is benificially when you want to compare two paths in terms of fuel cost
 which is a better factor for comparison than the total length
 '''
-# import matplotlib.pyplot as plt
-from scipy.optimize import curve_fit
-import numpy as np
 
 
 class Cost_Analysis:
@@ -32,14 +37,12 @@ class Cost_Analysis:
     def __init__(self, path_followed, zoom):
         '''
         Initialises the Cost_Analysis Class object
-
         ** Parameters **
         self : Object of the class
         path_followed : List of tuples : *int*
                 The path so folllowed from the start to all the end points
         zoom : *int*
              Zoom level for the Google Image so chosen by the user
-
         ** Returns **
         Nothing!
         '''
@@ -55,14 +58,10 @@ class Cost_Analysis:
         and the distance it represents, thus carrying out a curve fitting
         to get the function parameters (found that exponential function fits
         the data the best).
-
         ** Parameters **
         None
-
         ** Returns **
         None
-
-
         From Google Maps data we get for
         Zoom Pixel Distance(m)
         3     163   1609000
@@ -88,17 +87,15 @@ class Cost_Analysis:
         plt.plot(X, Y, '*r', label="Samples")
         plt.show()
         '''
-        self.m_p = func(self.zoom, *p_opt)
+        self.m_p = abs(func(self.zoom, *p_opt))
 
     def cost_analysis(self):
         '''
         This function performs fuel cost analysis for the path so followed
         As we explained the fuel cost and milege of the vehicle is already
         feeded (general value assumed )
-
         ** Parameters **
         None
-
         ** Returns **
         distance_traveled : *Float*
                 Net distance travelled by the vehicle for that path in miles

@@ -21,7 +21,6 @@ reached. We then save this path so followed as a GIF! Additionally, we
 then ask the user if he wants to find a shorter path i.e which point
 should we remove so that the reduction is most. And if the user wants
 he can use this as his final solution or keep his original one!
-
 Further we this has the potential to be a back end code for
 websites and apps that utilize this function. Apps like
 Uber Pool or even JHU Night Ride Shuttle can use this to go
@@ -128,7 +127,7 @@ def img_to_grid(filename):
     for y in range(height):
         for x in range(width):
             pxl = img.getpixel((x, y))
-            if (253 <= pxl[0] <= 257 and 253 <= pxl[1] <= 257 and 253 <= pxl[2] <= 257 ) or (245 <= pxl[0] <= 255 and 220 <= pxl[1] <= 245 and 100 <= pxl[2] <= 180 ):
+            if (253 <= pxl[0] <= 257 and 253 <= pxl[1] <= 257 and 253 <= pxl[2] <= 257) or (245 <= pxl[0] <= 255 and 220 <= pxl[1] <= 245 and 100 <= pxl[2] <= 180):
                 IMG.putpixel((x, y), (255, 255, 255))
 
     # Storing as a Grid
@@ -166,6 +165,7 @@ def img_to_grid(filename):
 
 def locate_map(location, zoom):
     '''
+    https://www.youtube.com/watch?v=5zH2kvDdToU
     This function get the Google Maps Image
     from the location and zoom level entered by the user
     ** Parameter **
@@ -253,7 +253,7 @@ def save_as_GIF(location, path_followed):
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
             draw = ImageDraw.Draw(f_img)
-            draw.ellipse((x - 4, y - 4, x + 4, y + 4), fill = 'GREEN', outline = 'blue')
+            draw.ellipse((x - 4, y - 4, x + 4, y + 4), fill='GREEN', outline='blue')
             f_img.save(basename)
             images.append(f_img)
         elif ele == start_pt_list:
@@ -261,7 +261,7 @@ def save_as_GIF(location, path_followed):
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
             draw = ImageDraw.Draw(f_img)
-            draw.ellipse((x - 4, y - 4, x + 4, y + 4), fill = 'RED', outline = 'RED' )
+            draw.ellipse((x - 4, y - 4, x + 4, y + 4), fill='RED', outline='RED')
             f_img.save(basename)
             images.append(f_img)
         else:
@@ -269,7 +269,7 @@ def save_as_GIF(location, path_followed):
             y = round(2 * ele[0])
             f_img = Image.open(basename).convert("RGB")
             draw_path = ImageDraw.Draw(f_img)
-            draw_path.ellipse((x - 1, y - 1, x + 1, y + 1), fill = (154, 205, 50) )
+            draw_path.ellipse((x - 1, y - 1, x + 1, y + 1), fill=(154, 205, 50))
             f_img.save(basename)
             images.append(f_img)
     images[0].save(basename.strip(".png") + "_solution.gif", save_all=True, append_images=images[1:], optimize=False, duration=60, loop=0)
@@ -401,9 +401,9 @@ if __name__ == "__main__":
         distance_travel, fuel_amount, fuel_cost_original = Cost_1.cost_analysis()
         print("\n" + "-" * 79)
         print("The Fuel Cost Analysis include : ")
-        print("Distance travelled : ", distance_travel)
-        print("Amount of fuel consumed : , ", fuel_amount)
-        print("Fuel Cost : ", fuel_cost_original)
+        print("Distance travelled : %0.2f miles" % distance_travel)
+        print("Amount of fuel consumed : %0.2f gallons" % fuel_amount)
+        print("Fuel Cost : %0.2f $ " % fuel_cost_original)
 
         print("\n" + "-" * 79)
         comp_ans = input("Do you want to get even a shorter path (Y/N)? ")
@@ -416,9 +416,9 @@ if __name__ == "__main__":
 
             print("\n" + "-" * 79)
             print("The new Fuel Cost Analysis include : ")
-            print("Distance travelled : ", distance_travel)
-            print("Amount of fuel consumed : ", fuel_amount)
-            print("Fuel Cost : ", fuel_cost_new)
+            print("Distance travelled : %0.2f miles" % distance_travel)
+            print("Amount of fuel consumed : %0.2f gallons" % fuel_amount)
+            print("Fuel Cost : %0.2f $" % fuel_cost_new)
 
             if reduction == 0:
                 print("Could not find a much shorter path! Sorry!")
@@ -442,4 +442,3 @@ if __name__ == "__main__":
             raise Exception("Invalid Input")
     else:
         print("Sorry could not find the solution!")
-

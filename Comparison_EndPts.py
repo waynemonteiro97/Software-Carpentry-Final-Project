@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec  6 23:01:09 2019
+
+@author: Wayne Monteiro
+"""
+import copy
+from Grid_Solver_2 import Grid
 '''
 Part of Final Project - Comparison of paths if an end point is removed
 Author: Prabhjot Kaur
@@ -9,8 +17,6 @@ This function calculates the minimum path length so found by the removal of a
 specific end point. Then it calculates the reduction percentage when comparing
 to original path.
 '''
-import copy
-from Grid_Solver_2 import Grid
 
 
 class Compare():
@@ -25,7 +31,6 @@ class Compare():
     def __init__(self, grid, path_followed, start_pt, end_pt):
         '''
         Initialises the Compare Class object
-
         ** Parameters **
         self : Object of Class
         grid : List of Lists : *int*
@@ -37,7 +42,6 @@ class Compare():
             Start point so mentioned by the user
         end_pt : List of tuples : *int*
             List of all the end points mentioned by the user
-
         ** Returns **
         Nothing!
         '''
@@ -50,10 +54,8 @@ class Compare():
         '''
         This function is to find by the removal of which end point
         the path reduces the most and what is the percentage of reduction
-
         ** Parameters **
         None
-
         ** Returns **
         ele_min_path : Tuple : *int*
                   The end point whose removal reduces the path length the most

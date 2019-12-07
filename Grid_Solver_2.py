@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec  6 23:02:45 2019
+
+@author: Wayne Monteiro
+"""
+import queue
+import sys
+import copy
 '''
 Grid Solver Class
 Author: Prabhjot Kaur
@@ -31,9 +40,7 @@ which is reached first then that becomes your new origin or start point
 in the main solver where this code is imported a loop is carried out till all
 the end points are reached
 '''
-import queue
-import sys
-import copy
+
 
 WALL = 0
 PATH = 1
@@ -62,7 +69,6 @@ class Grid:
              Start point so selected by the user
         end_pt : List of tuples : *int*
              List of all the end points selected by the user
-
         ** Returns **
         Nothing!
         '''
@@ -78,7 +84,6 @@ class Grid:
         '''
         This function checks if the given point is within
         the grid or not, thus valid or not
-
         ** Parameters **
         coord : List/Tuple : *int*
                The point coordinates
@@ -86,7 +91,6 @@ class Grid:
                 Height of the grid generated from the image
         width : *int*
                 Width of the grid generated from the image
-
         ** Returns **
         True or False : *Bool*
         '''
@@ -102,11 +106,9 @@ class Grid:
         One of the errors to find the solution path is if the last
         point in the queue is not the end point. This is then modifies the
         first part of the solution path for its last point to be the end point
-
         ** Parameters **
         end_pt : List of tuples : *int*
                End point List
-
         ** Returns **
         final_path : first part of the modified solution path
         '''
@@ -125,13 +127,11 @@ class Grid:
 
     def shortest_path(self):
         '''
-        This function uses the Breadth for Search Algorithm
+        This function uses the Breadth first Search Algorithm
         for finding the shortest path between two points.
         Uses queues which uses FIFO.
-
         ** Parameters **
         None
-
         ** Returns **
         new_origin : Tuple : *int*
                     The end point so reached which becomes the
@@ -169,7 +169,7 @@ class Grid:
                 for i in range(len(possible_coord)):
                     next_x = current_pos[0] + possible_coord[i][0]
                     next_y = current_pos[1] + possible_coord[i][1]
-                    if self.valid_point((next_x, next_y), self.h, self.w) and visited_grid[next_x][next_y] == False and self.grid[next_x][next_y] == 1:
+                    if self.valid_point((next_x, next_y), self.h, self.w) and visited_grid[next_x][next_y] is False and self.grid[next_x][next_y] == 1:
                         visited_grid[next_x][next_y] = True
                         self.path.put((next_x, next_y))
                         if current_pos not in self.follow.queue:
