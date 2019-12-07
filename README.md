@@ -10,7 +10,7 @@ If you're carpooling with a bunch of friends, you might want to choose the short
 
 ## How it works?
 ```markdown
-1. The user inputs the location in which all the pick-up/drop-off locations are found. The Google Maps API gets the map of the requested location.
+1. The user inputs the location in which all the pick-up/drop-off locations are found. The Google Maps API gets the map of the requested location. Also the user inputs the Zoom level. From Google Maps you get a 256x256 pixels image at 0 zoom level, while for zoom level 1 its a 128x128 pixels image. So the rest of the zoom levels are set in a similar way. 
 2. It turns the map into a black and white version of itself.
 3. For the code to run well for large maps, we create a mask of 4 pixels which moves through the whole image. The mask averages out the pixels in it. If the average is non-zero then a value of 1 is assigned to a corresponding location in a 2D-array. This array represents our map in a grid form.
 4. The user inputs the multiple locations which are the drop-off points they want the path to be optimised around.
